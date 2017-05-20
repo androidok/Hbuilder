@@ -129,7 +129,7 @@ webApp的开发
 				var baritem = this;
 				//返回 href属性的值
 				var baritemurl = baritem.getAttribute('href'); 
-//				console.log(baritemurl);
+//			 	console.log(baritemurl);
 //				console.log(curBarItemWebview.getURL().indexOf(baritemurl));
 //				console.log(curBarItemWebview.getURL());
 //				console.log(~curBarItemWebview.getURL().indexOf(baritemurl));
@@ -185,8 +185,8 @@ webApp的开发
 </body>
 </html>
 
-出现的错误的原因是barItemArray数组中存储的导航条目和底部导航<nav>标签中<a>标签的href存储的内容不一致造成的
-<a class="mui-tab-item" href="barItem/wishList.html">的内容
+出现的错误的原因是barItemArray数组中存储的导航条目和底部导航<nav />标签中<a />标签的href存储的内容不一致造成的
+//<a class="mui-tab-item" href="barItem/wishList.html" />的内容
 var barItemArray = ['homepage/home.html','categoryfenlei.html','homepage/wishList.html','homepage/cart.html','homepage/mine.html'];的内容，这是错误的关键，这样写的时候只有分类标签起作用，barItemArray修改成下面的内容就可以了
 barItemArray = ['barItem/home.html','categoryfenlei.html','barItem/wishList.html','barItem/cart.html','barItem/mine.html']
 barItem是存放导航页面的文件夹
