@@ -1,0 +1,78 @@
+在manifest.json中配置应用的其实页，start_page.html.
+ start_page.html做的主要的事情
+  判断
+  mui.plusReady(function(){
+    //判断是否第一次登录
+			var storageVersion = plus.storage.getItem("firstFlag");
+      //如果不是第一次使用，直接预加载登录界面
+			if (storageVersion == true || storageVersion == "true") {
+      预加载登录界面
+				var tagetView = mui.preload({
+					url: "login.html",
+					id: "login"
+				});
+        //为了给用户更好的体验效果我们首先预加载界面，过了一段时间之后,登录界面显示
+				//动画时间定义的长一点，以便页面加载好了再关闭启动界面
+				tagetView.show("slide-in-right", 600, function() {
+					plus.navigator.closeSplashscreen();
+				});
+			} else {
+      //预加载引导界面
+				var tagetWebView = mui.preload({
+					url: "guide.html",
+					id: "guide"
+				});
+				//动画时间定义的长一点，以便页面加载好了再关闭启动界面
+				tagetWebView.show("slide-in-right", 600, function() {
+        //关闭
+					plus.navigator.closeSplashscreen();//关闭启动封面图片
+				});
+			}
+		});
+
+假设现在是第一次使用，下面就是进入到引导界面
+/*页面显示的原理是一个页面覆盖另外一个页面，页面之间也就是进行覆盖显示的**/
+guide.html
+存放的是一个图片轮播的组件
+在mui文档中我们可以查到图片轮播的快捷键mslider
+同时在guide.js中写一些函数用于处理guide.html代码中的一些逻辑
+例如我们看完引导界面之后我们就需要进入系统的正式界面，也就是系统的登录界面，这时候我们就要首先 处理的是预加载这些界面，跳入的时候方便顺利跳入，不会出现
+白屏的状态，
+mui.plusReady(function() {
+//预加载之后要进入的界面
+	preHome = mui.preload({
+		url: "login.html",
+		id: "login"
+	});
+	//判断手机的系统
+	if(mui.os.ios){
+    //设置系统屏幕的状态
+		plus.navigator.setFullscreen(true);
+	}
+  //去掉hbuilder的启动界面
+	plus.navigator.closeSplashscreen();
+});
+//设置监听最后一个页面的点击事件，点击之后跳转到相应的界面
+//立即体验按钮点击事件
+document.getElementById("close").addEventListener('tap', function(event) {
+	//存储登录的标记，记录的是不是第一次登录，
+	plus.storage.setItem("firstFlag", "true");
+	//显示登录界面
+	preHome.show("pop-in", 200);
+//	plus.navigator.setFullscreen(false);
+//	var wv = plus.webview.getWebviewById("login");
+//	wv.reload(false);
+//	plus.webview.currentWebview().close();
+}, false);
+//监听返回键按钮
+document.addEventListener("plusready",function(){
+//backbutton是手机的返回按钮的监听
+	plus.key.addEventListener('backbutton',function(){
+		//退出应用
+			plus.runtime.quit();
+	},false);
+})
+
+
+
+
