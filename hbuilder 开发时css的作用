@@ -1,0 +1,11 @@
+position: absolute;可以控制图片是否显示
+background-size: 100% 100%;可以控制背景图片显示的大小
+
+div{
+		height: 100%;
+		width: 100%;
+		background-image: url(images/guide_page.jpg);
+		position: absolute;
+		background-size: 100% 100%;	
+	}
+  设置标签的背景的时候这些属性是必不可少的
