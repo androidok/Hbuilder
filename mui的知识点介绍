@@ -20,3 +20,27 @@ mui('.text_box').on('tap','.keep_password',function(){
 	});
   
 
+三。图片轮播的圆点导航的设计
+    		.mui-slider-indicator{
+    			padding-top: 20px;
+    		}
+    		
+    		.mui-slider-indicator .mui-active.mui-indicator
+		{
+   			 background: #82BC29;
+		}
+		/*设置导航条的外边框的颜色和未选中的时候圆圈内的填充颜色*/
+		.mui-slider-indicator .mui-indicator
+		{
+   		 display: inline-block;
+   	 	width: 6px;
+   		height: 6px;
+    	margin: 1px 6px;
+ 	   cursor: pointer;
+
+  	  border-radius: 50%;
+  	  background: white;
+  	  -webkit-box-shadow: 0 0 1px 1px #82BC29;
+            box-shadow: 0 0 1px 1px #82BC29;
+	}
+		
