@@ -1,1 +1,22 @@
-设置input的placeholder的字体的颜色input：：-webkit-input-placeHolder{color："#ffffff"}
+一、设置input的placeholder的字体的颜色input：：-webkit-input-placeHolder{color："#ffffff"}
+二、设置标签的点击事情的时候点击一次执行两次，设置监听事件的时候只需把tap换成click。
+
+mui('.text_box').on('tap','.keep_password',function(){
+		if(count1 % 2 == 0 ){
+			document.getElementById("keep_pwd_img").src = "images/btn_keeppassword_index_select.png";
+		}else{
+			document.getElementById("keep_pwd_img").src = "images/btn_keeppassword_index_normal.png";
+		}
+		count1++;
+	});
+  修改后
+  mui('.text_box').on('click','.keep_password',function(){
+		if(count1 % 2 == 0 ){
+			document.getElementById("keep_pwd_img").src = "images/btn_keeppassword_index_select.png";
+		}else{
+			document.getElementById("keep_pwd_img").src = "images/btn_keeppassword_index_normal.png";
+		}
+		count1++;
+	});
+  
+
