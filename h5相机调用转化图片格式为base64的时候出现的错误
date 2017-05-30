@@ -19,12 +19,14 @@ function compressImage(url, filename, flag) {
 			var path = name; //压缩转换目标图片的路径  
 			//event.target获取压缩转换后的图片url路  
 			//filename图片名称  
-			console.log(event.target);
-			
+			console.log(event.target);/**************************************************************************/
+			/**************************************************************************/
+			//这个就是转化出错的地方，按照下面的方法修改就不会出错了
 			var	img = document.createElement("img");
 			img.src = event.target;
 			console.log(img);		
-				getBase64Image(img);			
+				getBase64Image(img);
+		/**************************************************************************/
 			setTimeout(function() {
 			
 			var data = getBase64Image(img); //base64编码
