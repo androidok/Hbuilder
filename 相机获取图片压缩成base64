@@ -1,0 +1,105 @@
+//点击相机获取图片
+	mui('.mui-table-view').on('tap', '.mui-camera1', function() {
+		photoFromCamera();
+
+	});
+  
+  function photoFromCamera() {
+		var camera = plus.camera.getCamera();
+		camera.captureImage(function(file) {
+			console.log("相机调用成功");
+			showImage(file);
+		}, function(error) {
+			plus.nativeUI.toast("读取拍照文件错误：" + e.message);
+		}, {
+			index: '2'
+		});
+	}
+
+	function showImage(file) {
+		plus.io.resolveLocalFileSystemURL(file, function(url) {
+			url.file(function(file) {
+				console.log(file.size);
+				//大于一定的值就压缩
+				if(file.size > 512) {
+					//var scap = file.size > 512 * 2 ? '20%' : '50%';
+					compressImage(url.toLocalURL(), url.name);
+				} else {
+					//设置地址
+					head_photo.src = url.toLocalURL();
+					console.log(url.toLocalURL());
+					if(lastFile && lastFile != url.toLocalURL()) {
+						$('#head_photo').cropper('reset').cropper('replace', url.toLocalURL());
+					} else {
+						$('#head_photo').cropper("getCroppedCanvas", {
+							aspectRatio: 1 / 1,
+							autoCropArea: 0.8
+						});
+					}
+					lastFile = url.toLocalURL();
+				}
+			});
+		});
+	}
+	//压缩图片  
+	function compressImage(url, filename) {
+		var name = "_doc/upload/" + filename; //_doc/upload/F_ZDDZZ-1467602809090.jpg  
+		
+		console.log(url);
+		plus.zip.compressImage({
+				src: url, //src: (String 类型 )压缩转换原始图片的路径  
+				dst: name, //压缩转换目标图片的路径  
+				quality: 20, //quality: (Number 类型 )压缩图片的质量.取值范围为1-100  
+				overwrite: true //overwrite: (Boolean 类型 )覆盖生成新文件  
+			},
+			function(event) {
+				//uploadf(event.target,divid);  
+				var path = name; //压缩转换目标图片的路径  
+				//event.target获取压缩转换后的图片url路  
+				//filename图片名称  
+				console.log(event.target);
+        //下面是错误的关键，按照下面的写法就不会报错了
+			  	var  img= document.createElement("img");
+        			img.src=event.target;
+            var data = getBase64Image(img);  //base64编码
+				onSuccessfromCamera(data);
+
+			},
+			function(error) {
+				plus.nativeUI.toast("压缩图片失败，请稍候再试");
+			});
+	}
+
+	function onSuccessfromCamera(imageData) {
+		//console.log("chenggog");
+		mui.ajax("http://123.161.210.102:200/index.php/System/ChangeImg/changeHeadImg2",{
+			type: "POST",
+//			url: 
+			data: {
+				"img": imageData,
+				"userid": user[0].userid
+			},
+			dataType: "json",
+			timeout: 5000,
+			success: function(Json) {
+
+				//console.log("chenggog");
+				if(Json != null) {
+
+					$("#head_photo").attr("src", "data:image/jpeg;base64," + imageData);
+					generalstorage("headimg", Json);
+					new Toast({
+						context: mui('body'),
+						message: "头像更新成功"
+					}).show();
+				}
+			},
+			error: function(xHttpRequest, testStatus) {
+				console.log("baoo");
+				new Toast({
+					context: mui('body'),
+					message: errorToast
+				}).show();
+			}
+		});
+	}
