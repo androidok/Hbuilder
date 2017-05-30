@@ -1,0 +1,9 @@
+1、Uncaught TypeError: Failed to execute 'drawImage' on 'CanvasRenderingContext2D':
+    No function was found that matched the signature provided. at js/camerademo.js:32
+    getBase64Image(img)传值的时候不能传地址，传递的是一个图片的对象
+    var  img= document.createElement("img");
+    
+    ---------------
+    
+    
+    
