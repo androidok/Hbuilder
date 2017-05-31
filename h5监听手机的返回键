@@ -1,0 +1,45 @@
+第一种的情况：双击返回键的时候退出应用
+    var first=null;
+	mui.back=function(){  
+                //首次按键，提示‘再按一次退出应用’  
+                if(!first){  
+                    first = new Date().getTime();  
+                    mui.toast('再按一次退出应用');  
+                    setTimeout(function(){  
+                        first = null;  
+                    },2000);  
+                } else {  
+                    if(new Date().getTime() - first < 2000){  
+                        plus.runtime.quit();  
+                    }  
+                }  
+            }
+            
+ 第二种的情况：给出退出提示框
+    mui.back=function () {  
+                    var btnArray = ['是', '否'];  
+                    mui.confirm('是否退出应用', '首道医院版', btnArray, function(e) {  
+                              if (e.index == 0) {  
+                                  plus.runtime.quit();  
+                                }  
+                        })  
+             }  
+             
+             
+  第三种的情况，是监听手机的按键问题，这种情况在使用的时候效果不是很好，不建议使用，使用上面的两种情况，自己在写代码的时候，项目使用的时候，效果
+  达不到预期的效果。上面的两种情况可以很好的完成想要的结果
+  var first = null;  
+            plus.key.addEventListener('backbutton', function(){  
+                //首次按键，提示‘再按一次退出应用’  
+                if(!first){  
+                    first = new Date().getTime();  
+                    mui.toast('再按一次退出应用');  
+                    setTimeout(function(){  
+                        first = null;  
+                    },2000);  
+                } else {  
+                    if(new Date().getTime() - first < 2000){  
+                        plus.runtime.quit();  
+                    }  
+                }  
+            }, false);  
