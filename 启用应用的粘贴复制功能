@@ -1,0 +1,22 @@
+在css中添加下面语句就可以实现粘贴复制了
+*{-webkit-user-select:auto}
+如果还要兼容其他的浏览器，需要下面的设置
+*{   
+    -webkit-touch-callout:auto;  /*系统默认菜单被禁用*/   
+    -webkit-user-select:auto; /*webkit浏览器*/   
+    -khtml-user-select:auto; /*早期浏览器*/   
+    -moz-user-select:auto;/*火狐*/   
+    -ms-user-select:auto; /*IE10*/   
+    user-select:auto;   
+}
+
+不同的浏览器使用的内核不一样
+下面的语句是关闭了粘贴复制的功能
+*{   
+    -webkit-touch-callout:none;  /*系统默认菜单被禁用*/   
+    -webkit-user-select:none; /*webkit浏览器*/   
+    -khtml-user-select:none; /*早期浏览器*/   
+    -moz-user-select:none;/*火狐*/   
+    -ms-user-select:none; /*IE10*/   
+    user-select:none;   
+}
