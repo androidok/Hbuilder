@@ -1,0 +1,5 @@
+        
+        页面刷新的代码
+        window.location.reload();
+	      页面关闭刷新的代码
+					window.opener.document.location.reload() 	
