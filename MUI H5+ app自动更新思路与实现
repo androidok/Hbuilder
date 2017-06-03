@@ -1,0 +1,59 @@
+MUI H5+ app自动更新思路与实现
+
+1.在服务器需要一个json或html文件，json最好。
+{   
+    "state": "yes",//是否自动更新   
+    "mark": "1.0.6",//版本号   
+    "url": "http:\/\/XXXXXXXX\/APPobject\/mmm.apk"//更新的应用下载地址   
+}  
+2.自动更新函数
+t是你当前正在运行的APP的版本号
+ 
+//检查自动更新   
+function svn(t) {   
+    var xhr_svn = new plus.net.XMLHttpRequest();   
+    xhr_svn.onreadystatechange = function() {   
+        if (xhr_svn.readyState == 4) {   
+            if (xhr_svn.status == 200) {   
+                var res = JSON.parse(xhr_svn.responseText);   
+                if (res.state == 'yes') {   
+                    if (res.mark != t) {   
+                        var upr;   
+                        plus.nativeUI.confirm( "有新版本发布了，是否件更新？", function(e){   
+                            upr=(e.index==0)?"Y":"N";   
+//                          console.log(upr);   
+                            if(upr=="Y"){   
+                            var wt = plus.nativeUI.showWaiting('下载更新中，请勿关闭');   
+                            var url = res.url; // 下载文件地址   
+                            var dtask = plus.downloader.createDownload(url, {}, function(d, status) {   
+                                if (status == 200) { // 下载成功   
+                                    var path = d.filename;   
+                                    console.log(d.filename);   
+                                    plus.runtime.install(path);   
+                                } else { //下载失败   
+                                    alert("Download failed: " + status);   
+                                }   
+                            });   
+                            dtask.start();   
+                            }else{   
+                                   
+                            }   
+                        }, "XXX系统", ["确认","取消"] );   
+                           
+                           
+                    } else {   
+                        console.log('最新');   
+                    }   
+                }   
+            } else {   
+                plus.nativeUI.toast( "网络连接错误！");   
+            }   
+        }   
+    }   
+    xhr_svn.open("GET", "http:/XXX/APPobject/imes/update.json");//这里的地址是上面json文件的地址   
+    xhr_svn.send();   
+   
+}   
+3.调用方法：在每次系统打开运行的时候执行上面的函数就可以
+svn(版本号);
+
