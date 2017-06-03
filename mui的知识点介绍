@@ -43,4 +43,37 @@ mui('.text_box').on('tap','.keep_password',function(){
   	  -webkit-box-shadow: 0 0 1px 1px #82BC29;
             box-shadow: 0 0 1px 1px #82BC29;
 	}
+	
+4、hbuilder中的mui.min.js插件影响a标签使用锚点，a标签设置的锚点，点击之后，显示出来之后内容也就随着消失了
+eg：<body>
+		
+		<div class="photo_index">
+
+			<a  href="#add_extend_plat" id="head_photo">sssss</a>
+
+		</div>
+		<!--<div class="photo_index1">
+
+			<div id="head_photo1">sssss</div>
+
+		</div>-->
+
+		<!--推广平台的弹框-->
+		<div class="mui-popover" id="add_extend_plat">
+			<div class="content-block popup_box">
+				<div class="popup_head">请选择部门</div>
+				<div class="popup_list">
+					<ul id="plat_add_list" class="popover_ul">
+					</ul>
+				</div>
+				<div class="popup_cancel">
+					<a>取消</a>
+				</div>
+			</div>
+		</div>
+	</body>
+
+
+
+	
 		
