@@ -1,9 +1,15 @@
 1、Uncaught TypeError: Failed to execute 'drawImage' on 'CanvasRenderingContext2D':
     No function was found that matched the signature provided. at js/camerademo.js:32
-    getBase64Image(img)传值的时候不能传地址，传递的是一个图片的对象
+   
     var  img= document.createElement("img");
-    
+    img.src="XXXXXXX";//XXXXXXX：代表的是图片的地址。
+     getBase64Image(img)传值的时候不能传地址，传递的是一个图片的对象
+     这时候的问题就能够正常的解决了
     ---------------
-    
+  2、在hbuilder中使用framework7的css的时候，mui中的点击事件不起作用，引起这个的主要原因是
+   	  <div class="views">
+	    <!-- Left view -->
+	    <div class="view view-main">
+        framework7中的这两个属性的原因，只要把这两个class去掉之后点击事件就能够正常的执行。
     
     
