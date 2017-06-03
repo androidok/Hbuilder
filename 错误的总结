@@ -10,6 +10,6 @@
    	  <div class="views">
 	    <!-- Left view -->
 	    <div class="view view-main">
-        framework7中的这两个属性的原因，只要把这两个class去掉之后点击事件就能够正常的执行。
+        framework7中的这两个class的原因，只要把这两个class去掉之后点击事件就能够正常的执行。
     
     
