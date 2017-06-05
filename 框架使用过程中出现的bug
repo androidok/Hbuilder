@@ -1,0 +1,82 @@
+移动端地区选择控件mobile-select-area在使用的过程中，出现了点击一次连续弹出弹框的bug，处理的方法是把mobile-select-area.js中的bindEvent:标记中的
+this.trigger.tap(function(e) {});换成	this.trigger.click(function(e) {})方法就可以了。这时候就可以正常的弹出对话框了。
+
+修改后的内容如下：
+
+
+bindEvent: function() {
+			var _this = this;
+			//这个tap事件换成click就可以了，这个点击事件就可以正常的显示
+			this.trigger.click(function(e) {
+				var dlgContent = '';
+				for (var i = 0; i < _this.level; i++) {
+					dlgContent += '<div></div>';
+				};
+				$.confirm('<div class="ui-scroller-mask"><div id="' + _this.id + '" class="ui-scroller">' + dlgContent + '<p></p></div></div>', null, function(t, c) {
+					if (t == "yes") {
+						_this.submit()
+					}
+					if (t = 'no') {
+						_this.cancel();
+					}
+					this.dispose();
+				}, {
+					clientHeight: _this.clientHeight,
+					clientWidth: _this.clientWidth
+				});
+				_this.scroller = $('#' + _this.id);
+				_this.format();
+				var start = 0,
+					end = 0
+				_this.scroller.children().bind('touchstart', function(e) {
+					start = e.changedTouches[0].pageY;
+				});
+				_this.scroller.children().bind('touchmove', function(e) {
+					end = e.changedTouches[0].pageY;
+					var diff = end - start;
+					var dl = $(e.target).parent();
+					if (dl[0].nodeName != "DL") {
+						return;
+					}
+					var top = parseInt(dl.css('top') || 0) + diff;
+					dl.css('top', top);
+					start = end;
+					return false;
+				});
+				_this.scroller.children().bind('touchend', function(e) {
+					end = e.changedTouches[0].pageY;
+					var diff = end - start;
+					var dl = $(e.target).parent();
+					if (dl[0].nodeName != "DL") {
+						return;
+					}
+					var i = $(dl.parent()).index();
+					var top = parseInt(dl.css('top') || 0) + diff;
+					if (top > _this.mtop) {
+						top = _this.mtop;
+					}
+					if (top < -$(dl).height() + 60) {
+						top = -$(dl).height() + 60;
+					}
+					var mod = top / _this.mtop;
+					var mode = Math.round(mod);
+					var index = Math.abs(mode) + 1;
+					if (mode == 1) {
+						index = 0;
+					}
+					_this.value[i] = $(dl.children().get(index)).attr('ref');
+					_this.value[i] == 0 ? _this.text[i] = "" : _this.text[i] = $(dl.children().get(index)).html();
+					for (var j = _this.level - 1; j > i; j--) {
+						_this.value[j] = 0;
+						_this.text[j] = "";
+					}
+					if (!$(dl.children().get(index)).hasClass('focus')) {
+						_this.format();
+					}
+					$(dl.children().get(index)).addClass('focus').siblings().removeClass('focus');
+					dl.css('top', mode * _this.mtop);
+					return false;
+				});
+				return false;
+			});
+		},
