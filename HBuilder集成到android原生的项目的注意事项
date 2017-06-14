@@ -1,0 +1,44 @@
+一、集成的时候项目中需要添加RInformation类
+    在添加的时候这个类的包名是io.dcloud
+    不能是其他的包名，如果是其他的包名，就会报找不到RInformation.java这个类的错误
+    error：
+    java.lang.NoClassDefFoundError: Failed resolution of: Lio/dcloud/RInformation;
+    
+    Caused by: java.lang.ClassNotFoundException: Didn't find class "io.dcloud.RInformation" on path: 
+    DexPathList[[zip file "/data/app/com.example.hbuildersdk-1/base.apk"],nativeLibraryDirectories=
+    [/data/app/com.example.hbuildersdk-1/lib/arm, /vendor/lib, /system/lib]]
+    
+    如果出现上面的错误就是RInformation类的包名命名出现了错误，这个类的包名是io.dcloud，是固定的，这个包直接在src文件夹的下面。
+  二、程序运行成功了，但是应用打开的时候是一个白屏即一个无内容的页面，这个bug的主要是有加载页面的activity中的	
+  splashView.setBackgroundResource(RInformation.DRAWABLE_SPLASH);引起的，如果这条语句没有的话，加载的就是一个无内容的界面，所以这条语句一定要有
+ 
+ 
+ @Override
+	public Object onCreateSplash(Context pContextWrapper) {
+		splashView = new FrameLayout(activity);
+		//这个设置影响页面的显示，如果没有这条语句的话，页面是没有办法加载的
+		splashView.setBackgroundResource(RInformation.DRAWABLE_SPLASH);
+		rootView.addView(splashView);
+		return null;
+	}
+ 三、程序集成好之后，运行的时候，提示“Hbuilder打包时未添加ui模块”的提示
+   这个提示的原因主要有两种
+   第一种：data文件夹下dcloud_control.xml文件中
+   appid栏中填入：id 即应用的标识
+   appver栏中填入：version下的name 即应用版本名称
+   中的内容和项目中manifest.json文件 中
+{
+.......
+ "id": "H538C2850",/*应用的标识，创建应用时自动生成，勿手动修改*/
+    "name": "Runners",/*应用名称，程序桌面图标名称*/
+    "version": {
+        "name": "1.0",/*应用版本名称*/
+        "code": ""
+    },的内容一致，不然的话就会报错
+  第二种的情况是：data文件夹下的
+  dcloud_properties.xml
+  中的内容的首行要有<?xml version="1.0" encoding="utf-8"?>这条语句，不然的话也会报出上述的提示，因为这条语句是xml的标志
+  标志dcloud_properties.xml文件中的内容是xml文件
+  
+  
+  
