@@ -70,5 +70,18 @@
    访问服务器传入的参数存在问题，另一方面就是服务器的问题，服务器本身返回的数据就存在问题
    
    
+   ***************************************************************************************
+   org.xml.sax.SAXParseException: expected: /feature read: 
+   features (position:END_TAG </features>@63:13 in java.io.InputStreamReader@d922097) 
+   这个错误说明的是我们的xml文件中有错误，缺少标记的闭合标记 ，查看刚才添加的标记是否缺少闭合的标记 />
+   xml的标记都是<a   /> 或者<a> </a>,如果这个出现错误的话会引起“Hbuilder打包时未添加ui模块”的提示
+   
+   
+   
+   
+   
+   
+   
+   
   
  
