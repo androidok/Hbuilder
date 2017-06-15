@@ -48,6 +48,9 @@
   标志dcloud_properties.xml文件中的内容是xml文件
   第三种的情况：如果项目中缺少manifest.json文件夹的时候项目运行的时候也会出现白屏的情况
   
+  第四种的情况就是如果properties.xml第一条的语句为空的话也会引起“Hbuilder打包时未添加ui模块”的提示
+  
+   缺少so库文件的话也会报出错误的
   ***************************************************************************
   项目中出现java.lang.NullPointerException: Attempt to invoke interface method 'void io.dcloud.common.DHInterface.IApp.setIAppStatusListener(io.dcloud.common.DHInterface.IApp$IAppStatusListener)' on a null object reference   错误的时候先看html的项目中是否缺少manifest.json文件，如果缺少，就是这个文件引起的，如果不缺少的话就是由于项目中缺少相应的jar包。
   
@@ -64,6 +67,6 @@
     
     ***********************************************************************************
   
-  
+   
   
  
