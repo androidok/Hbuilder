@@ -76,11 +76,54 @@
    这个错误说明的是我们的xml文件中有错误，缺少标记的闭合标记 ，查看刚才添加的标记是否缺少闭合的标记 />
    xml的标记都是<a   /> 或者<a> </a>,如果这个出现错误的话会引起“Hbuilder打包时未添加ui模块”的提示
    
+   ***********************************************************************************************
+   Hbuilder 项目集成到原生的时候我们可以用下面的方式集成
+   在清单文件中添加下面的activity（这种方式主要是为了减少白屏的效果，主要是通过“mui--文档--5+ APP--5+SDK 集成--5+SDK---5+SDK集成---独立应用方式集成”进行的
+   代码的集成）
+   
+   第一步把下面的内容添加到清单文件
+   		把src文件夹中的io.dcloud中的文件拷贝到我们项目的src中
+		
+		
+  		 把libs和和res中的文件复制到项目中，替换drawable中的splash图片修改启动页的图片
    
    
+    第二步：在清单文件中添加下面两个activiy，如果不添加内容是不能显示的
+   
+   <activity
+            android:name="io.dcloud.PandoraEntry"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:hardwareAccelerated="true"
+            android:theme="@style/TranslucentTheme"
+            android:screenOrientation="user"
+            android:windowSoftInputMode="adjustResize" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="io.dcloud.PandoraEntryActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|keyboard|navigation|mcc|mnc|fontScale"
+            android:hardwareAccelerated="true"
+            android:label="5+Debug"
+            android:launchMode="singleTask"
+            android:screenOrientation="user"
+            android:theme="@style/DCloudTheme"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+   第三步，打开assets -> apps 目录，将下面“H5eee”（或者其他的名字）目录名称修改为应用manifest.json中的id名称（这步非常重要，否则会导致应用无法正常启动），并将所有应用资源拷贝到其下的www目录中：
    
    
+   第四步：打开assets -> data下的control.xml文件，修改appid值，其中appid值为HBuilder应用的appid，必须与应用manifest.json中的id值完全一致，修改 manifest.json中id的值
    
+   其他的地方应该没有修改了，如果需要更新的话以后添加。
+  
+   
+  
    
    
   
